@@ -10,6 +10,10 @@ const server = express();
 
 server.name = 'API';
 
+const PORT = process.env.PORT || 3001
+server.set('port', PORT)
+server.set('appName', 'Dog PI - Nicolás Salvo')
+
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());

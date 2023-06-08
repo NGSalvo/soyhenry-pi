@@ -18,11 +18,9 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { connection } = require('./src/db.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-  });
+connection.sync({ force: true }).then(() => {
+  server.listen(server.get('port'), () => console.log(`Server listening on port ${server.get('port')}...`))
 });
