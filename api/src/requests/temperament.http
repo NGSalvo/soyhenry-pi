@@ -1,0 +1,9 @@
+@hostname = localhost
+@port = 3001
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@url = temperaments
+
+### GET ALL TEMPERAMENTS
+GET http://{{host}}/{{url}}
+Content-Type: application/json

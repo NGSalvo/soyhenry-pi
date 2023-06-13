@@ -185,7 +185,7 @@ const addDog = async (req, res) => {
 
     if (!hasAllProperties(dog, requiredProperties)) return res.status(401).send('Faltan campos requeridos') 
 
-    const [ newDog ] = await Dog.findOrCreate({
+    const [ newDog, created ] = await Dog.findOrCreate({
       where: {
         name,
       },
@@ -196,6 +196,8 @@ const addDog = async (req, res) => {
       },
       include: [ Height, Weight, { model: Temperament, as: 'temperament'}, LifeSpan ],
     })
+
+    if (!created) return res.status(200).send('Ya existe este registro')
 
     const existingTemperaments = await Temperament.findAll({
       where: { name: temperament },
@@ -225,14 +227,15 @@ const addDog = async (req, res) => {
 const removeDog = async(req, res) => {
   try {
     const { breedId } = req.params
+
+    const foundDog = await Dog.findByPk(breedId)
     
-    await Dog.destroy({
-      where: {
-        id: breedId
-      }
-    })
+    if (!foundDog) return res.status(404).send(`There is no dog with the id: ${breedId}`)
+    
+    await foundDog.destroy();
   
-    return res.sendStatus(200)
+    return res.status(200).send(foundDog)
+
   } catch (error) {
     res.status(500).send(error.message)
   }

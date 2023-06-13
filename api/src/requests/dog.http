@@ -60,9 +60,30 @@ Content-Type: application/json
         "min": 10,
         "max": 12
     },
-    "temperament": ["Stubborn", "Curious", "Talkative"]
+    "temperament": ["Stubborn", "Independent", "Non-existent Temper"]
+}
+
+### POST SAME DOG, SHOULD NOT UPDATE
+POST http://{{host}}/{{url}}
+Content-Type: application/json
+
+{
+    "weight": {
+        "min": 3,
+        "max": 600
+    },
+    "height": {
+        "min": 23,
+        "max": 290
+    },
+    "name": "OtherHound",
+    "life_span": {
+        "min": 10,
+        "max": 120
+    },
+    "temperament": ["Stubborn", "Curious", "Non-existent Temper"]
 }
 
 ### DELETE DOG WITH ID
-DELETE http://{{host}}/{{url}}/7f841a72-2e39-4524-b11d-d7252e2b925e
+DELETE http://{{host}}/{{url}}/cb76b977-5d97-4d3a-985a-4bacc60eeb1e
 Content-Type: application/json
