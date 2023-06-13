@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('height', {
       id: {
          type: DataTypes.INTEGER,
-         allowNull: false,
+         autoIncrement: true,
          primaryKey: true,
       },
       min: {

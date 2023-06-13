@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('lifeSpan', {
       id: {
          type: DataTypes.INTEGER,
-         allowNull: false,
+         autoIncrement: true,
          primaryKey: true,
       },
       min: {
@@ -17,5 +17,5 @@ module.exports = (sequelize) => {
          type: DataTypes.INTEGER,
          allowNull: false
       }
-  });
+  },{ underscored: true });
 };

@@ -26,9 +26,12 @@ dependencies:
   pg:
     specifier: ^8.5.1
     version: 8.5.1
+  pg-hstore:
+    specifier: ^2.3.4
+    version: 2.3.4
   sequelize:
     specifier: ^6.3.5
-    version: 6.3.5(pg@8.5.1)
+    version: 6.3.5(pg-hstore@2.3.4)(pg@8.5.1)
 
 devDependencies:
   chai:
@@ -1391,6 +1394,13 @@ packages:
     resolution: {integrity: sha512-x14ibktcwlHKoHxx9X3uTVW9zIGR41ZB6QNhHb21OPNdCCO3NaRnpJuwKIQSR4u+Yqjx4HCvy7Hh7VSy1U4dGg==}
     dev: false
 
+  /pg-hstore@2.3.4:
+    resolution: {integrity: sha512-N3SGs/Rf+xA1M2/n0JBiXFDVMzdekwLZLAO0g7mpDY9ouX+fDI7jS6kTq3JujmYbtNSJ53TJ0q4G98KVZSM4EA==}
+    engines: {node: '>= 0.8.x'}
+    dependencies:
+      underscore: 1.13.6
+    dev: false
+
   /pg-int8@1.0.1:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
@@ -1664,7 +1674,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.3.5(pg@8.5.1):
+  /sequelize@6.3.5(pg-hstore@2.3.4)(pg@8.5.1):
     resolution: {integrity: sha512-MiwiPkYSA8NWttRKAXdU9h0TxP6HAc1fl7qZmMO/VQqQOND83G4nZLXd0kWILtAoT9cxtZgFqeb/MPYgEeXwsw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -1695,6 +1705,7 @@ packages:
       moment: 2.29.4
       moment-timezone: 0.5.43
       pg: 8.5.1
+      pg-hstore: 2.3.4
       retry-as-promised: 3.2.0
       semver: 7.5.1
       sequelize-pool: 6.1.0
@@ -1936,6 +1947,10 @@ packages:
   /undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
     dev: true
+
+  /underscore@1.13.6:
+    resolution: {integrity: sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==}
+    dev: false
 
   /unique-string@2.0.0:
     resolution: {integrity: sha512-uNaeirEPvpZWSgzwsPGtU2zVSTrn/8L5q/IexZmH0eH6SA73CmAA5U4GwORTxQAZs95TAXLNqeLoPPNO5gZfWg==}

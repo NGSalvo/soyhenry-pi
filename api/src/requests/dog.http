@@ -1,0 +1,68 @@
+@hostname = localhost
+@port = 3001
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@url = dogs
+
+### GET ALL DOGS
+GET http://{{host}}/{{url}}
+Content-Type: application/json
+
+### GET ALL DOGS WITH QUERY STRING
+GET http://{{host}}/{{url}}?name=hound
+Content-Type: application/json
+
+### GET DOG WITH ID
+GET http://{{host}}/{{url}}/1
+Content-Type: application/json
+
+### GET UNEXISTENT DOG
+GET http://{{host}}/{{url}}/1000000
+Content-Type: application/json
+
+
+### POST DOG
+POST http://{{host}}/{{url}}
+Content-Type: application/json
+
+{
+    "weight": {
+        "min": 3,
+        "max": 6
+    },
+    "height": {
+        "min": 23,
+        "max": 29
+    },
+    "name": "Affenpinscher",
+    "life_span": {
+        "min": 10,
+        "max": 12
+    },
+    "temperament": ["Stubborn", "Curious", "Playful", "Adventurous", "Active", "Fun-loving"]
+}
+
+### POST ANOTHER DOG
+POST http://{{host}}/{{url}}
+Content-Type: application/json
+
+{
+    "weight": {
+        "min": 3,
+        "max": 6
+    },
+    "height": {
+        "min": 23,
+        "max": 29
+    },
+    "name": "OtherHound",
+    "life_span": {
+        "min": 10,
+        "max": 12
+    },
+    "temperament": ["Stubborn", "Curious", "Talkative"]
+}
+
+### DELETE DOG WITH ID
+DELETE http://{{host}}/{{url}}/7f841a72-2e39-4524-b11d-d7252e2b925e
+Content-Type: application/json
