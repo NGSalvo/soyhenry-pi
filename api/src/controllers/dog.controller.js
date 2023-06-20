@@ -22,8 +22,13 @@ const apiToJSON = data => {
     const matchRegex = /\d+\.?\d*(?:\s-\s\d*\.?\d*)*/
     let matched = splitted.map(range => range.match(matchRegex) ? range.match(matchRegex)[0] : "" )
     
-    newRange.min = matched[0] ? matched[0] : matched[1]
-    newRange.max = matched[1] ? matched[1] : matched[0]
+    if (matched.length < 2) {
+      newRange.min = matched[0]
+      newRange.max = matched[0]
+    } else {
+      newRange.min = matched[0] ? matched[0] : matched[1]
+      newRange.max = matched[1] ? matched[1] : matched[0]
+    }
 
     return newRange
   }
