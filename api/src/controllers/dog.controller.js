@@ -5,10 +5,11 @@ const { Op } = require('sequelize')
 
 
 const apiToJSON = data => {
+  
   const newDog = {
     id: data.id,
     name: data.name,
-    image: data.image?.url,
+    image: parseImage(),
     height: parseRange(data.height.metric),
     weight: parseRange(data.weight.metric),
     life_span: parseRange(data.life_span),
@@ -19,7 +20,7 @@ const apiToJSON = data => {
     const newRange = {}
     const splitted = data.split('-')
     const matchRegex = /\d+\.?\d*(?:\s-\s\d*\.?\d*)*/
-    let matched = splitted.map(year => year.match(matchRegex) ? year.match(matchRegex)[0] : '' )
+    let matched = splitted.map(range => range.match(matchRegex) ? range.match(matchRegex)[0] : '' )
 
     if (matched.length < 2) {
       newRange.min = matched[0]
@@ -37,6 +38,15 @@ const apiToJSON = data => {
     return temperaments?.map(temperament => ({ name: temperament }))
   }
 
+  function parseImage() {
+    const imageUrl = "https://cdn2.thedogapi.com/images"
+    if (!data.reference_image_id) return 'noDogImage.webp'
+    if ([15, 125, 212].includes(data.id)) {
+      return `${imageUrl}/${data.reference_image_id}.png`
+    }
+    return `${imageUrl}/${data.reference_image_id}.jpg`
+  }
+
   return newDog
 }
 
@@ -46,9 +56,30 @@ const getDogs = async (req, res) => {
   try {
     const { name } = req.query
 
-    const dogsData = !name ? await fetch(DOG_API_URL): await fetch(`${DOG_API_URL}/search?q=${name}`)
+    let dogsApiData
 
-    const foundApiDogs = await dogsData.json()
+    if (name) {
+      dogsApiData = fetch(DOG_API_URL)
+      let dogsApiByName = fetch(`${DOG_API_URL}/search?q=${name}`)
+      let [dogsApiResponse, dogByNameResponse] = await Promise.all([dogsApiData, dogsApiByName])
+      
+      dogsApiData = await dogsApiResponse.json()
+      const dogsApiDataByName = dogsApiData.filter(dog => dog.name.toLowerCase().includes(name))
+
+      dogsApiByName = await dogByNameResponse.json()
+
+      const missingDogs = dogsApiByName.filter(dog => !dogsApiDataByName.find(d => d.id === dog.id))
+      const allDogsApi = [...dogsApiDataByName, ...missingDogs]
+
+      allDogsApi.sort((a,b) => a.id - b.id)
+      
+      dogsApiData = allDogsApi
+    } else {
+      dogsApiData = await fetch(DOG_API_URL)
+      dogsApiData = await dogsApiData.json()
+    }
+
+    const foundApiDogs = dogsApiData
 
     const foundDBDogs = 
     !name ? 
