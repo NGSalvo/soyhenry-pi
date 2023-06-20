@@ -16,19 +16,14 @@ const apiToJSON = data => {
     temperament: parseTemperament()
   }
 
-  function parseRange(data) {
+  function parseRange(data2) {
     const newRange = {}
-    const splitted = data.split('-')
+    const splitted = data2.split('-')
     const matchRegex = /\d+\.?\d*(?:\s-\s\d*\.?\d*)*/
-    let matched = splitted.map(range => range.match(matchRegex) ? range.match(matchRegex)[0] : '' )
-
-    if (matched.length < 2) {
-      newRange.min = matched[0]
-      newRange.max = matched[0]
-    } else {
-      newRange.min = matched[0]
-      newRange.max = matched[1]
-    }
+    let matched = splitted.map(range => range.match(matchRegex) ? range.match(matchRegex)[0] : "" )
+    
+    newRange.min = matched[0] ? matched[0] : matched[1]
+    newRange.max = matched[1] ? matched[1] : matched[0]
 
     return newRange
   }
@@ -159,6 +154,7 @@ const getDog = async (req, res) => {
     
     const foundApidDog = foundApiDogs.filter(dog => dog.id === Number(breedId))
 
+    console.log("🚀 ~ file: dog.controller.js:164 ~ getDog ~ apiToJSON(foundApidDog[0]:", apiToJSON(foundApidDog[0]))
     if (foundApidDog.length === 1) return res.status(200).send(apiToJSON(foundApidDog[0]))
 
     const foundDBDogs = await Dog.findByPk(breedId, { 
