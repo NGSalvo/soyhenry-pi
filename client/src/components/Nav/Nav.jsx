@@ -25,6 +25,9 @@ export const Nav = ({ onSearch }) => {
         <NavLink to={'/home'} className={({isActive}) => isActive ? style.active: style.inactive}>
           Inicio
         </NavLink>
+        <NavLink to={'/create'} className={({isActive}) => isActive ? style.active: style.inactive}>
+          Agregar 🐶
+        </NavLink>
         <button onClick={handleClearAll}>Limpiar todo</button>
         Fuente: 
         <select onChange={handleFilter}>

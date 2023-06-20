@@ -6,6 +6,7 @@ export const Cards = ({ dogs }) => {
   function serialize({id, name, image, height, weight, life_span,temperament}) {
     const minMaxAdapter = ({min, max}) => {
       if (min && max) {
+        if (min === max) return `${min}`
         return `${min} - ${max}`
       }
       if (min && !max) {
