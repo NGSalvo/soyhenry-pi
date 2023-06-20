@@ -1,0 +1,5 @@
+export const INIT_DOGS = 'INIT_DOGS'
+export const SEARCH_BY_NAME_DOGS = 'SEARCH_BY_NAME_DOGS'
+export const FILTER = 'FILTER'
+export const ORDER = 'ORDER'
+export const CLEAR = 'CLEAR'

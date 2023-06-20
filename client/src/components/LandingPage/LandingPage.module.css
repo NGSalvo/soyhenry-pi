@@ -1,0 +1,21 @@
+.container {
+  position: relative;
+}
+
+.place-at {
+  position: absolute;
+  left: 41%;
+  top: 80%;
+}
+
+.overlay {
+  position: absolute;
+  background: rgba(57, 57, 57, 0.5);
+  inset: 0;
+  transform: scale(0);
+  transition: all .3s ease-in-out;
+}
+
+.container:hover .overlay{
+  transform: scale(1);
+}
