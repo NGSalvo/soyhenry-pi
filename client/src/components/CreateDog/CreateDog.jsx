@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createDog } from "../../redux/actions";
-import { validate } from "@utils"
-
-
-const isObjectEmpty = (object) => {
-  return object && Object.keys(object).length === 0 && object.constructor === Object;
-}
+import { validate, isObjectEmpty } from "@utils"
 
 const initialState = {
   name: "",
@@ -41,6 +36,7 @@ const serializeInput = (inputs) => {
 }
 
 export const CreateDog = () => {
+
   const [form, setForm] = useState(initialState)
   const [errors, setErrors] = useState({})
 

@@ -1,8 +1,5 @@
 import style from './Pagination.module.css'
 
-
-import { usePagination } from "../../hooks/usePagination";
-
 export const Pagination = ({ currentPage, totalPages, getCurrentItems, navigateToPage }) => {
   const handlePrevious = () => {
     navigateToPage(currentPage - 1);

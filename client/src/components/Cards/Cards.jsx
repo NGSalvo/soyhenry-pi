@@ -31,7 +31,6 @@ export const Cards = ({ dogs }) => {
   }
 
   const serializedDogs = dogs.map(dog => serialize(dog))
-  
 
   return (
     <div className={style.container}>{
