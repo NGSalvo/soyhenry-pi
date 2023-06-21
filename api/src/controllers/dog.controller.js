@@ -56,7 +56,6 @@ const dbToJson = data => {
   if (Object.keys(data).length === 0) return {}
 
   if (Array.isArray(data)) {
-    console.log('original data: ', data)
     const life_span = data[0].lifeSpan
     delete data[0].lifeSpan
     return [{
@@ -64,7 +63,6 @@ const dbToJson = data => {
       life_span
     }]
   }
-  console.log('original data: ', data)
   const life_span = data.lifeSpan
   delete data.lifeSpan
   return {
@@ -223,7 +221,6 @@ const getDog = async (req, res) => {
     if (foundDBDogs) {
       let foundDbDogsData = foundDBDogs.get({plain:true})
       foundDbDogsData = dbToJson(foundDbDogsData)
-      console.log('dbToJson ', foundDbDogsData)
       
       return res.status(200).send(foundDbDogsData)
     }
@@ -259,7 +256,7 @@ const addDog = async (req, res) => {
       defaults: {
         height,
         weight,
-        lifeSpan
+        lifeSpan,
       },
       include: [ Height, Weight, { model: Temperament, as: 'temperament'}, LifeSpan ],
     })
@@ -279,13 +276,38 @@ const addDog = async (req, res) => {
     });
 
     for (const temperamentName of newTemperaments) {
-      const [temperamentInstance] = await Temperament.findOrCreate({
+      const [temperament] = await Temperament.findOrCreate({
         where: { name: temperamentName },
       });
-      await newDog.addTemperament(temperamentInstance);
+      await newDog.addTemperament(temperament);
     }
+
+    const dogWithTemperaments = await Dog.findByPk(newDog.id, {
+      include: [ 
+        {
+          model: Height,
+          attributes: ['min', 'max']
+        },
+        {
+          model: Weight,
+          attributes: ['min', 'max']
+        },
+        {
+          model: Temperament,
+          as: 'temperament',
+          attributes: ['name'],
+          through: {
+            attributes: []
+          }
+        },
+        {
+          model: LifeSpan,
+          attributes: ['min', 'max']
+        },
+      ],
+    });
     
-    return res.status(200).send(newDog)
+    return res.status(200).send(dogWithTemperaments)
   } catch(error) {
     res.status(500).send(error.message)
   }
