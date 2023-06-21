@@ -41,7 +41,7 @@ const apiToJSON = data => {
   function parseImage() {
     const imageUrl = "https://cdn2.thedogapi.com/images"
     if (!data.reference_image_id) return 'noDogImage.webp'
-    // TODO: Sacar programaticamente estos valores
+    // TODO: get those values programatically by filtering or something
     if ([15, 125, 212].includes(data.id)) {
       return `${imageUrl}/${data.reference_image_id}.png`
     }
@@ -281,6 +281,8 @@ const addDog = async (req, res) => {
       });
       await newDog.addTemperament(temperament);
     }
+
+    //TODO: refactor to afterCreate hook so I do not have to perform an additional query
 
     const dogWithTemperaments = await Dog.findByPk(newDog.id, {
       include: [ 

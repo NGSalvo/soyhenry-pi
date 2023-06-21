@@ -1,6 +1,6 @@
 import { temperamentURL, dogURL } from '../utils/const'
 
-import { INIT_DOGS, SEARCH_BY_NAME_DOGS, FILTER, ORDER, CLEAR, CREATE_DOG } from "./action-types";
+import { INIT_DOGS, SEARCH_BY_NAME_DOGS, FILTER, ORDER, CLEAR, CREATE_DOG, FILTER_BY_TEMPERAMENT } from "./action-types";
 
 
 export const initDogs = () => {
@@ -49,6 +49,13 @@ export const orderCards = (order) => {
 export const clearCards = () => {
   return {
     type: CLEAR
+  }
+}
+
+export const filterByTemperament = (temperament) => {
+  return {
+    type: FILTER_BY_TEMPERAMENT,
+    payload: temperament
   }
 }
 

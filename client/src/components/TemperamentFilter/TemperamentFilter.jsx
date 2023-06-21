@@ -1,6 +1,10 @@
-import style from './TemperamentFilter.module.css'
+import { useEffect, useState } from 'react';
+import style from './TemperamentFilter.module.css';
+import { TemperamentService } from "@services";
 
-export const TemperamentFilter = ({temperaments, selectedTemperaments, onTemperamentChage}) => {
+export const TemperamentFilter = ({ onTemperamentChange }) => {
+  const [temperaments, setTemperaments] = useState([]);
+  const [selectedTemperaments, setSelectedTemperaments] = useState([]);
 
   const handleClick = (temperament) => {
     let updatedSelectedTemperaments
@@ -10,8 +14,18 @@ export const TemperamentFilter = ({temperaments, selectedTemperaments, onTempera
       updatedSelectedTemperaments = [...selectedTemperaments, temperament];
     }
 
-    onTemperamentChage(updatedSelectedTemperaments)
+    onTemperamentChange(updatedSelectedTemperaments, temperament)
+    setSelectedTemperaments(updatedSelectedTemperaments)
   }
+
+  const fetchTemperaments = async() => {
+    const allTemperaments = await TemperamentService.getTemperaments()
+    setTemperaments(allTemperaments)
+  }
+
+  useEffect(() => {
+    fetchTemperaments()
+  }, []);
 
   return (
     <div>

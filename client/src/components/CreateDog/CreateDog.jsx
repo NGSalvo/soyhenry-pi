@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createDog } from "../../redux/actions";
 import { validate, isObjectEmpty } from "@utils"
-import { TemperamentService } from "@services";
 import { TemperamentFilter } from '@components'
 
 const initialState = {
@@ -22,7 +21,6 @@ const initialState = {
 export const CreateDog = () => {
   const [form, setForm] = useState(initialState)
   const [errors, setErrors] = useState({})
-  const [temperaments, setTemperaments] = useState([]);
   const [selectedTemperaments, setSelectedTemperaments] = useState([])
 
   const dispatch = useDispatch()
@@ -59,17 +57,11 @@ export const CreateDog = () => {
   }
 
   const handleTemperamentChange = (selectedTemperament) => {
-    setSelectedTemperaments(selectedTemperament);
-  };
-
-  const fetchTemperaments = async() => {
-    const allTemperaments = await TemperamentService.getTemperaments()
-    setTemperaments(allTemperaments)
+    setSelectedTemperaments(selectedTemperament)
   }
 
   useEffect(() => {
     validate(form)
-    fetchTemperaments()
   }, [form])
 
   const handleSubmit = (event) => {
@@ -77,6 +69,7 @@ export const CreateDog = () => {
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
     dispatch(createDog(serializeData))
+    setForm(initialState)
   }
 
   // TODO: Posibilidad de seleccionar/agregar varios temperamentos en simultáneo.
@@ -85,13 +78,13 @@ export const CreateDog = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Nombre: </label>
-        <input type="text" name="name" onChange={handleChange}/>
+        <input type="text" name="name" onChange={handleChange} value={form.name}/>
         {
           errors.name ? <p>{errors.name}</p> : ''
         }
 
         <label htmlFor="minHeight">Altura mínima: </label>
-        <input type="number" name="minHeight" onChange={handleChange} />
+        <input type="number" name="minHeight" onChange={handleChange} value={form.minHeight}/>
         {
           errors.minHeight ? <p>{errors.minHeight}</p> : ''
         }
@@ -124,7 +117,7 @@ export const CreateDog = () => {
         {
           errors.maxLifeSpan ? <p>{errors.maxLifeSpan}</p> : ''
         }
-        <TemperamentFilter temperaments={temperaments} onTemperamentChage={handleTemperamentChange} selectedTemperaments={selectedTemperaments}></TemperamentFilter>
+        <TemperamentFilter onTemperamentChange={handleTemperamentChange}></TemperamentFilter>
         <button type="submit">¡Crear 🐶!</button>
       </form>
     </div>

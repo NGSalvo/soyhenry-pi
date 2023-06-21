@@ -1,9 +1,13 @@
-import { INIT_DOGS, FILTER, ORDER, SEARCH_BY_NAME_DOGS, CLEAR, CREATE_DOG } from "./action-types"
+import { INIT_DOGS, FILTER, ORDER, SEARCH_BY_NAME_DOGS, CLEAR, CREATE_DOG, FILTER_BY_TEMPERAMENT } from "./action-types"
 
 const initialState = {
   myDogs: [],
-  allDogs: []
+  allDogs: [],
+  temperamentFilter: [],
+  createdAt: 'ALL'
 }
+
+let filteredDogs = []
 
 export const reducer = (state = initialState, {type, payload}) => {
   switch (type) {
@@ -20,7 +24,7 @@ export const reducer = (state = initialState, {type, payload}) => {
         myDogs: payload,
       }
     case FILTER:
-      let filteredDogs = []
+      filteredDogs = []
       if (payload === 'ALL') {
         filteredDogs = state.allDogs
       }
@@ -30,9 +34,46 @@ export const reducer = (state = initialState, {type, payload}) => {
       if (payload === 'DB') {
         filteredDogs = state.allDogs.filter(dog => typeof dog.id === 'string')
       }
+
+      filteredDogs = filteredDogs.filter(dog =>
+        state.temperamentFilter.every(filteredTemp =>
+          dog.temperament?.some(temperament => temperament.name === filteredTemp)
+        )
+      )
+
       return {
         ...state,
-        myDogs: filteredDogs
+        myDogs: filteredDogs,
+        createdAt: payload
+      }
+
+    case FILTER_BY_TEMPERAMENT:
+      filteredDogs = []
+      const isTemperedInFilter = state.temperamentFilter.includes(payload)
+      const newTemperamentFilter = isTemperedInFilter ? state.temperamentFilter.filter(temperament => temperament !== payload) : [...state.temperamentFilter, payload]
+
+      // This one check all the dogs that got some of the tempers, so it will be increasing when selecting more traits
+      // filteredDogs = state.allDogs.filter(dog => 
+      //   dog.temperament?.some(temperament => newTemperamentFilter.includes(temperament.name)))
+
+      filteredDogs = state.allDogs.filter(dog =>
+        newTemperamentFilter.every(filteredTemp =>
+          dog.temperament?.some(temperament => temperament.name === filteredTemp)
+        )
+      )
+
+      if (state.createdAt === 'API') {
+        filteredDogs = filteredDogs.filter(dog => typeof dog.id === 'number')
+      }
+      if (state.createdAt === 'DB') {
+        filteredDogs = filteredDogs.filter(dog => typeof dog.id === 'string')
+      }
+      
+
+      return {
+        ...state,
+        myDogs: filteredDogs,
+        temperamentFilter: newTemperamentFilter
       }
 
     case ORDER:
@@ -74,7 +115,8 @@ export const reducer = (state = initialState, {type, payload}) => {
     case CLEAR:
       return {
         ...state,
-        myDogs: [...state.allDogs]
+        myDogs: [...state.allDogs],
+        temperamentFilter: []
       }
 
     case CREATE_DOG:
