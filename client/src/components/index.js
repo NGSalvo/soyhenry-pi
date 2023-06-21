@@ -9,3 +9,4 @@ export * from './Nav/Nav';
 export * from './Pagination/Pagination';
 export * from './SearchBar/SearchBar';
 export * from './Temperament/Temperament';
+export * from './TemperamentFilter/TemperamentFilter';

@@ -1,0 +1,36 @@
+ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 16px;
+}
+
+li {
+  /* margin: 2px 5px; */
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 16px;
+  background-color: hsla(0, 0%, 88%, 1);
+  color: hsla(0, 0%, 26%, 1);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: hsl(160, 70%, 80%);
+}
+
+.selected {
+  background-color: hsl(160, 70%, 80%);
+}
+
+
+
+
+
+
+

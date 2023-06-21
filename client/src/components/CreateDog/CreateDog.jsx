@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createDog } from "../../redux/actions";
 import { validate, isObjectEmpty } from "@utils"
+import { TemperamentService } from "@services";
+import { TemperamentFilter } from '@components'
 
 const initialState = {
   name: "",
@@ -15,32 +17,35 @@ const initialState = {
   temperament: []
 }
 
-const serializeInput = (inputs) => {
-  return {
-    name: inputs.name,
-    height: {
-      min: inputs.minHeight || inputs.maxHeight,
-      max: inputs.maxHeight || inputs.minHeight,
-    },
-    weight: {
-      min: inputs.minWeight || inputs.maxWeight,
-      max: inputs.maxWeight || inputs.minWeight,
-    },
-    life_span: {
-      min: inputs.minLifeSpan || inputs.maxLifeSpan,
-      max: inputs.maxLifeSpan || inputs.minLifeSpan,
-    },
-    image: inputs.image,
-    temperament: inputs.temperament
-  }
-}
+
 
 export const CreateDog = () => {
-
   const [form, setForm] = useState(initialState)
   const [errors, setErrors] = useState({})
+  const [temperaments, setTemperaments] = useState([]);
+  const [selectedTemperaments, setSelectedTemperaments] = useState([])
 
   const dispatch = useDispatch()
+
+  const serializeInput = (inputs) => {
+    return {
+      name: inputs.name,
+      height: {
+        min: inputs.minHeight || inputs.maxHeight,
+        max: inputs.maxHeight || inputs.minHeight,
+      },
+      weight: {
+        min: inputs.minWeight || inputs.maxWeight,
+        max: inputs.maxWeight || inputs.minWeight,
+      },
+      life_span: {
+        min: inputs.minLifeSpan || inputs.maxLifeSpan,
+        max: inputs.maxLifeSpan || inputs.minLifeSpan,
+      },
+      image: inputs.image,
+      temperament: selectedTemperaments.map(temperament => temperament.name)
+    }
+  }
 
   const handleChange = (event) => {
     setForm({
@@ -53,8 +58,18 @@ export const CreateDog = () => {
     )
   }
 
+  const handleTemperamentChange = (selectedTemperament) => {
+    setSelectedTemperaments(selectedTemperament);
+  };
+
+  const fetchTemperaments = async() => {
+    const allTemperaments = await TemperamentService.getTemperaments()
+    setTemperaments(allTemperaments)
+  }
+
   useEffect(() => {
     validate(form)
+    fetchTemperaments()
   }, [form])
 
   const handleSubmit = (event) => {
@@ -109,6 +124,7 @@ export const CreateDog = () => {
         {
           errors.maxLifeSpan ? <p>{errors.maxLifeSpan}</p> : ''
         }
+        <TemperamentFilter temperaments={temperaments} onTemperamentChage={handleTemperamentChange} selectedTemperaments={selectedTemperaments}></TemperamentFilter>
         <button type="submit">¡Crear 🐶!</button>
       </form>
     </div>
