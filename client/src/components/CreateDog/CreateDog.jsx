@@ -1,34 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createDog } from "../../redux/actions";
+import { validate } from "@utils"
 
-const validate = (inputs) => {
-  const errors = {}
-
-  if (!inputs.name) {
-    errors.name = 'Nombre es requerido'
-  }
-
-  if (inputs.minHeight > inputs.maxHeight && inputs.maxHeight > 0) {
-    errors.minHeight = 'La altura mínima no puede ser mayor que la máxima'
-    errors.maxHeight = 'La altura máxima no puede ser menos que la mínima'
-  }
-
-  if (inputs.minHeight < 0) {
-    errors.minHeight = 'La altura debe ser mayor a 0'
-  }
-
-  if (inputs.maxHeight < 0) {
-    errors.maxHeight = 'La altura debe ser mayor a 0'
-  }
-
-  if (!inputs.minHeight && !inputs.maxHeight) {
-    errors.minHeight = 'Debe haber al menos una altura'
-    errors.maxHeight = 'Debe haber al menos una altura'
-  }
-
-  return errors
-}
 
 const isObjectEmpty = (object) => {
   return object && Object.keys(object).length === 0 && object.constructor === Object;
