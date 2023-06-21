@@ -1,6 +1,7 @@
 export * from './Card/Card';
 export * from './CardDetail/CardDetail';
 export * from './Cards/Cards';
+export * from './CreateDog/CreateDog';
 export * from './Error/Error';
 export * from './Home/Home';
 export * from './LandingPage/LandingPage';

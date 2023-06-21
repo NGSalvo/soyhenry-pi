@@ -21,10 +21,14 @@ export const CardDetail = () => {
    const [{ name, height, weight, lifeSpan, temperaments, image }, setDog] = useState(initialState)
 
    const fetchDog = async(id) => {
-      const response = await fetch(`${dogURL}/${id}`)
-      const dog = await response.json()
-      const serializedDog = serialize(dog)
-      setDog(serializedDog)
+      try {
+        const response = await fetch(`${dogURL}/${id}`)
+        const dog = await response.json()
+        const serializedDog = serialize(dog)
+        setDog(serializedDog)
+      } catch (error) {
+        console.log(error)
+      }
    }
 
    function serialize({id, name, image, height, weight, life_span,temperament}) {

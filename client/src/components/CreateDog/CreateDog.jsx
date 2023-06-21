@@ -42,6 +42,8 @@ const initialState = {
   maxWeight: 0,
   minLifeSpan: 0,
   maxLifeSpan: 0,
+  image: 'noDogImage.webp',
+  temperament: []
 }
 
 const serializeInput = (inputs) => {
@@ -55,10 +57,12 @@ const serializeInput = (inputs) => {
       min: inputs.minWeight || inputs.maxWeight,
       max: inputs.maxWeight || inputs.minWeight,
     },
-    lifeSpan: {
+    life_span: {
       min: inputs.minLifeSpan || inputs.maxLifeSpan,
       max: inputs.maxLifeSpan || inputs.minLifeSpan,
     },
+    image: inputs.image,
+    temperament: inputs.temperament
   }
 }
 
@@ -87,7 +91,7 @@ export const CreateDog = () => {
     event.preventDefault()
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
-    // dispatch(createDog(serializeData))
+    dispatch(createDog(serializeData))
   }
 
   // TODO: Posibilidad de seleccionar/agregar varios temperamentos en simultáneo.

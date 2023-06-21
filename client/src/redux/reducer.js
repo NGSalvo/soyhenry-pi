@@ -1,4 +1,4 @@
-import { INIT_DOGS, FILTER, ORDER, SEARCH_BY_NAME_DOGS, CLEAR } from "./action-types"
+import { INIT_DOGS, FILTER, ORDER, SEARCH_BY_NAME_DOGS, CLEAR, CREATE_DOG } from "./action-types"
 
 const initialState = {
   myDogs: [],
@@ -75,6 +75,19 @@ export const reducer = (state = initialState, {type, payload}) => {
       return {
         ...state,
         myDogs: [...state.allDogs]
+      }
+
+    case CREATE_DOG:
+      const life_span = payload?.lifeSpan
+      delete payload.lifeSpan
+      const dog = {
+        ...payload,
+        life_span
+      }
+      return {
+        ...state,
+        allDogs: [...state.allDogs, dog],
+        myDogs: [...state.myDogs, dog]
       }
 
     default:

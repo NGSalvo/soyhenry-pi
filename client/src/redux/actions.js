@@ -1,6 +1,6 @@
 import { temperamentURL, dogURL } from '../utils/const'
 
-import { INIT_DOGS, SEARCH_BY_NAME_DOGS, FILTER, ORDER, CLEAR } from "./action-types";
+import { INIT_DOGS, SEARCH_BY_NAME_DOGS, FILTER, ORDER, CLEAR, CREATE_DOG } from "./action-types";
 
 
 export const initDogs = () => {
@@ -24,7 +24,6 @@ export const searchByName = (name) => {
         name
       })}`)
       const data = await response.json()
-      console.log(data)
       return dispatch({type: SEARCH_BY_NAME_DOGS,
       payload: data})
     } catch (error) {
@@ -32,18 +31,6 @@ export const searchByName = (name) => {
     }
   }
 }
-
-// export const removeFav = (id) => {
-//   return async function(dispatch) {
-//     try {
-//       const { data } = await axios.delete(`${URL}/${id}`)
-//       return dispatch({type: REMOVE_FAV,
-//       payload: data})
-//     } catch (error) {
-//       console.log('Could not remove from fav')
-//     }
-//   }
-// }
 
 export const filterCards = (infoType) => {
   return {
@@ -62,5 +49,33 @@ export const orderCards = (order) => {
 export const clearCards = () => {
   return {
     type: CLEAR
+  }
+}
+
+export const createDog = (payload) => {
+  const method = 'POST'
+  const headers = {
+    "Content-Type": 'application/json; charset=UTF-8'
+  }
+  const body = JSON.stringify(payload)
+
+  return async function(dispatch) {
+    try {
+      const response = await fetch(`${dogURL}/`, {
+        method,
+        headers,
+        body
+      })
+      const data = await response.json()
+      return dispatch(
+        {
+          type: CREATE_DOG,
+          payload: data
+        }
+      )
+    } catch (error) {
+      console.log(error)
+      console.log('Could not create a dog')
+    }
   }
 }
