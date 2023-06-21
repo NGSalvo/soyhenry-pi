@@ -16,9 +16,9 @@ const apiToJSON = data => {
     temperament: parseTemperament()
   }
 
-  function parseRange(data2) {
+  function parseRange(data) {
     const newRange = {}
-    const splitted = data2.split('-')
+    const splitted = data.split('-')
     const matchRegex = /\d+\.?\d*(?:\s-\s\d*\.?\d*)*/
     let matched = splitted.map(range => range.match(matchRegex) ? range.match(matchRegex)[0] : "" )
     
@@ -41,6 +41,7 @@ const apiToJSON = data => {
   function parseImage() {
     const imageUrl = "https://cdn2.thedogapi.com/images"
     if (!data.reference_image_id) return 'noDogImage.webp'
+    // TODO: Sacar programaticamente estos valores
     if ([15, 125, 212].includes(data.id)) {
       return `${imageUrl}/${data.reference_image_id}.png`
     }
@@ -50,6 +51,27 @@ const apiToJSON = data => {
   return newDog
 }
 
+const dbToJson = data => {
+  if (data.length === 0) return []
+  if (Object.keys(data).length === 0) return {}
+
+  if (Array.isArray(data)) {
+    const life_span = data[0].lifeSpan
+    delete data[0].lifeSpan
+    return [{
+      ...data[0],
+      life_span
+    }]
+  }
+  const life_span = data.lifeSpan
+  delete data.lifeSpan
+  return {
+    ...data,
+    life_span
+  }
+
+  
+}
 
 
 const getDogs = async (req, res) => {
@@ -139,6 +161,7 @@ const getDogs = async (req, res) => {
     })
 
     let foundDbDogsData = foundDBDogs?.map(dog => dog.get({plain:true}))
+    foundDbDogsData = dbToJson(foundDbDogsData)
 
 
     let adaptedDogs = foundApiDogs.map(dog => apiToJSON(dog))
@@ -159,9 +182,15 @@ const getDog = async (req, res) => {
     
     const foundApidDog = foundApiDogs.filter(dog => dog.id === Number(breedId))
 
-    console.log("🚀 ~ file: dog.controller.js:164 ~ getDog ~ apiToJSON(foundApidDog[0]:", apiToJSON(foundApidDog[0]))
     if (foundApidDog.length === 1) return res.status(200).send(apiToJSON(foundApidDog[0]))
 
+    const UUIDRegExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
+    if (!UUIDRegExp.test(breedId)) {
+      console.log('not an UUID')
+      return res.status(404).send('Raza no encontrada')
+    }
+    
     const foundDBDogs = await Dog.findByPk(breedId, { 
       include: [ 
         {
@@ -190,7 +219,8 @@ const getDog = async (req, res) => {
 
     
     if (foundDBDogs) {
-      const foundDbDogsData = foundDBDogs.get({plain:true})
+      let foundDbDogsData = foundDBDogs.get({plain:true})
+      foundDbDogsData = dbToJson(foundDbDogsData)
       
       return res.status(200).send(foundDbDogsData)
     }
@@ -198,7 +228,7 @@ const getDog = async (req, res) => {
     return res.status(404).send('Raza no encontrada')
 
   } catch(error) {
-    res.status(500).send(error.message)
+    res.status(500).send(error)
   }
 }
 
@@ -209,17 +239,19 @@ const addDog = async (req, res) => {
       height: true,
       weight: true,
       temperament: true,
-      life_span: true
+      life_span: true,
+      image: true
     }
 
     const dog = req.body
-    const { name, height, weight, life_span: lifeSpan, temperament } = dog
+    const { name, height, weight, life_span: lifeSpan, temperament, image } = dog
 
     if (!hasAllProperties(dog, requiredProperties)) return res.status(401).send('Faltan campos requeridos') 
 
     const [ newDog, created ] = await Dog.findOrCreate({
       where: {
         name,
+        image
       },
       defaults: {
         height,
