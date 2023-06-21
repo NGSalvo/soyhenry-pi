@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { createDog } from "../../redux/actions";
 import { validate, isObjectEmpty } from "@utils"
 import { TemperamentFilter } from '@components'
+import style from './CreateDog.module.css'
 
 const initialState = {
   name: "",
@@ -15,8 +16,6 @@ const initialState = {
   image: 'noDogImage.webp',
   temperament: []
 }
-
-
 
 export const CreateDog = () => {
   const [form, setForm] = useState(initialState)
@@ -69,7 +68,6 @@ export const CreateDog = () => {
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
     dispatch(createDog(serializeData))
-    setForm(initialState)
   }
 
   // TODO: Posibilidad de seleccionar/agregar varios temperamentos en simultáneo.
@@ -78,13 +76,13 @@ export const CreateDog = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Nombre: </label>
-        <input type="text" name="name" onChange={handleChange} value={form.name}/>
+        <input type="text" name="name" onChange={handleChange}/>
         {
           errors.name ? <p>{errors.name}</p> : ''
         }
 
         <label htmlFor="minHeight">Altura mínima: </label>
-        <input type="number" name="minHeight" onChange={handleChange} value={form.minHeight}/>
+        <input type="number" name="minHeight" onChange={handleChange}/>
         {
           errors.minHeight ? <p>{errors.minHeight}</p> : ''
         }
