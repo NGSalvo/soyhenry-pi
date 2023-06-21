@@ -56,6 +56,7 @@ const dbToJson = data => {
   if (Object.keys(data).length === 0) return {}
 
   if (Array.isArray(data)) {
+    console.log('original data: ', data)
     const life_span = data[0].lifeSpan
     delete data[0].lifeSpan
     return [{
@@ -63,6 +64,7 @@ const dbToJson = data => {
       life_span
     }]
   }
+  console.log('original data: ', data)
   const life_span = data.lifeSpan
   delete data.lifeSpan
   return {
@@ -221,6 +223,7 @@ const getDog = async (req, res) => {
     if (foundDBDogs) {
       let foundDbDogsData = foundDBDogs.get({plain:true})
       foundDbDogsData = dbToJson(foundDbDogsData)
+      console.log('dbToJson ', foundDbDogsData)
       
       return res.status(200).send(foundDbDogsData)
     }
