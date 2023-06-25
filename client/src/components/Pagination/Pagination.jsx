@@ -15,7 +15,7 @@ export const Pagination = ({ currentPage, totalPages, getCurrentItems, navigateT
         <button onClick={handlePrevious} disabled={currentPage === 1}>
           &lt;&lt;
         </button>
-        <span>Página {currentPage} de {totalPages}</span>
+        <span>Página {currentPage} de {totalPages === 0 ? 1 : totalPages}</span>
         <button onClick={handleNext} disabled={currentPage === totalPages}>
           &gt;&gt;
         </button>

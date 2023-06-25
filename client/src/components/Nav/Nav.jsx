@@ -5,10 +5,11 @@ import { SearchBar } from "@components";
 import { clearCards, filterCards, orderCards } from "../../redux/actions";
 import style from "./Nav.module.css";
 
-export const Nav = ({ onSearch }) => {
+export const Nav = ({ onSearch, navigateToPage }) => {
   const dispatch = useDispatch()
   const handleFilter = (event) => {
     dispatch(filterCards(event.target.value))
+    navigateToPage(1)
   }
 
   const handleOrder = (event) => {
@@ -17,6 +18,7 @@ export const Nav = ({ onSearch }) => {
 
   const handleClearAll = () => {
     dispatch(clearCards())
+    navigateToPage(1)
   }
 
   return (

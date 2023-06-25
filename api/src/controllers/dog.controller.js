@@ -73,6 +73,17 @@ const dbToJson = data => {
   
 }
 
+const getAllDbToJson = data => {
+  return data.map(dog => {
+    const life_span = dog.lifeSpan
+    delete dog.lifeSpan
+    return {
+      ...dog,
+      life_span
+    }
+  })
+}
+
 
 const getDogs = async (req, res) => {
   try {
@@ -161,8 +172,7 @@ const getDogs = async (req, res) => {
     })
 
     let foundDbDogsData = foundDBDogs?.map(dog => dog.get({plain:true}))
-    foundDbDogsData = dbToJson(foundDbDogsData)
-
+    foundDbDogsData = getAllDbToJson(foundDbDogsData)
 
     let adaptedDogs = foundApiDogs.map(dog => apiToJSON(dog))
     let dbAndApiDogsMerged = [...adaptedDogs, ...foundDbDogsData]
@@ -188,7 +198,7 @@ const getDog = async (req, res) => {
 
     if (!UUIDRegExp.test(breedId)) {
       console.log('not an UUID')
-      return res.status(404).send('Raza no encontrada')
+      return res.status(404).json({message: 'Raza no encontrada'})
     }
     
     const foundDBDogs = await Dog.findByPk(breedId, { 
@@ -225,7 +235,7 @@ const getDog = async (req, res) => {
       return res.status(200).send(foundDbDogsData)
     }
 
-    return res.status(404).send('Raza no encontrada')
+    return res.status(404).json({message: 'Raza no encontrada'})
 
   } catch(error) {
     res.status(500).send(error)
@@ -246,7 +256,7 @@ const addDog = async (req, res) => {
     const dog = req.body
     const { name, height, weight, life_span: lifeSpan, temperament, image } = dog
 
-    if (!hasAllProperties(dog, requiredProperties)) return res.status(401).send('Faltan campos requeridos') 
+    if (!hasAllProperties(dog, requiredProperties)) return res.status(401).json({message: 'Faltan campos requeridos'}) 
 
     const [ newDog, created ] = await Dog.findOrCreate({
       where: {
@@ -261,7 +271,7 @@ const addDog = async (req, res) => {
       include: [ Height, Weight, { model: Temperament, as: 'temperament'}, LifeSpan ],
     })
 
-    if (!created) return res.status(200).send('Ya existe este registro')
+    if (!created) return res.status(409).json({ message: 'Ya existe este registro' })
 
     const existingTemperaments = await Temperament.findAll({
       where: { name: temperament },

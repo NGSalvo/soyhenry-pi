@@ -74,6 +74,17 @@ export const createDog = (payload) => {
         body
       })
       const data = await response.json()
+
+      if (!response.ok) {
+        let error = {
+          message: data.message,
+          status: response.status
+        }
+        throw error
+      }
+
+      alert(`${data.name} creado con exito!`)
+
       return dispatch(
         {
           type: CREATE_DOG,
@@ -81,7 +92,7 @@ export const createDog = (payload) => {
         }
       )
     } catch (error) {
-      console.log(error)
+      if (error.status === 409) alert(error.message)
       console.log('Could not create a dog')
     }
   }

@@ -43,7 +43,7 @@ function App() {
     
   return (
     <div className="App">
-      { pathname !== '/' && <Nav onSearch={searchByName}></Nav>}
+      { pathname !== '/' && <Nav onSearch={searchByName} navigateToPage={navigateToPage}></Nav>}
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/home' element={<Home dogs={getCurrentItems()} currentPage={currentPage} totalPages={totalPages} getCurrentItems={getCurrentItems} navigateToPage={navigateToPage} />}/>

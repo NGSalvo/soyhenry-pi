@@ -3,6 +3,8 @@ const { Temperament } = require('../db')
 
 const initTemperaments = async () => {
   try {
+    if (await Temperament.findOne()) return
+    
     const dogsData = await fetch(DOG_API_URL)
     const dogs = await dogsData.json()
 

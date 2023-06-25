@@ -1,6 +1,6 @@
 import { Temperament } from "@components";
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import noDogImage from '../../assets/images/noDogImage.webp';
 import { dogURL } from "../../utils";
 import style from './CardDetail.module.css';
@@ -19,15 +19,26 @@ const initialState = {
 export const CardDetail = () => {
    const { id } = useParams()
    const [{ name, height, weight, lifeSpan, temperaments, image }, setDog] = useState(initialState)
+   const navigate = useNavigate();
 
    const fetchDog = async(id) => {
       try {
         const response = await fetch(`${dogURL}/${id}`)
-        const dog = await response.json()
-        const serializedDog = serialize(dog)
+        const data = await response.json()
+
+        if (!response.ok) {
+          let error = {
+            message: data.message,
+            status: response.status
+          }
+          throw error
+        }
+
+        const serializedDog = serialize(data)
         setDog(serializedDog)
       } catch (error) {
-        console.log(error)
+        if (error.status === 404) alert(error.message)
+        navigate('/not-found')
       }
    }
 
