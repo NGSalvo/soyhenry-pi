@@ -1,65 +1,72 @@
-export const validate = (inputs) => {
+export const validate = ({ name, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan, temperament }) => {
   const errors = {}
 
-  if (!inputs.name) {
+  if (!name) {
     errors.name = 'Nombre es requerido'
   }
 
-  if (inputs.minHeight > inputs.maxHeight && inputs.maxHeight > 0) {
+  if (name.length > 100) {
+    const characterCount = name.length
+    errors.name = `No se puede ingresar más de 100 caracteres. Cantidad actual: ${characterCount}`
+  }
+
+  if (+minHeight > +maxHeight && maxHeight > 0) {
     errors.minHeight = 'La altura mínima no puede ser mayor que la máxima'
     errors.maxHeight = 'La altura máxima no puede ser menos que la mínima'
   }
 
-  if (inputs.minHeight < 0) {
-    errors.minHeight = 'La altura debe ser mayor a 0'
+  if (+minHeight <= 0 && !maxHeight) {
+    errors.minHeight = 'La altura mínima debe ser mayor a 0'
   }
 
-  if (inputs.maxHeight < 0) {
-    errors.maxHeight = 'La altura debe ser mayor a 0'
+  if (+maxHeight <= 0 && !minHeight) {
+    errors.maxHeight = 'La altura máxima debe ser mayor a 0'
   }
 
-  if (!inputs.minHeight && !inputs.maxHeight) {
+  if (!minHeight && !maxHeight) {
     errors.minHeight = 'Debe haber al menos una altura'
     errors.maxHeight = 'Debe haber al menos una altura'
   }
 
-  if (inputs.minWeight > inputs.maxWeight && inputs.maxWeight > 0) {
-    errors.minWeight = 'El peso mínima no puede ser mayor que la máxima'
-    errors.maxWeight = 'El peso máxima no puede ser menos que la mínima'
+  if (+minWeight > +maxWeight && maxWeight > 0) {
+    errors.minWeight = 'El peso mínimo no puede ser mayor que el máximo'
+    errors.maxWeight = 'El peso máximo no puede ser menos que el mínimo'
   }
 
-  if (inputs.minWeight < 0) {
-    errors.minWeight = 'El peso debe ser mayor a 0'
+  if (+minWeight <= 0 && !maxWeight) {
+    errors.minWeight = 'El peso mínimo debe ser mayor a 0'
   }
 
-  if (inputs.maxWeight < 0) {
-    errors.maxWeight = 'El peso debe ser mayor a 0'
+  if (+maxWeight <= 0 && !minWeight) {
+    errors.maxWeight = 'El peso máximo debe ser mayor a 0'
   }
 
-  if (!inputs.minWeight && !inputs.maxWeight) {
-    errors.minWeight = 'Debe haber al menos un peso'
-    errors.maxWeight = 'Debe haber al menos un peso'
+  if (!minWeight && !maxWeight) {
+    errors.minWeight = 'Debe haber al menos un peso mínimo'
+    errors.maxWeight = 'Debe haber al menos un peso máximo'
   }
 
-  if (inputs.minLifeSpan > inputs.maxLifeSpan && inputs.maxLifeSpan > 0) {
+  if (+minLifeSpan > +maxLifeSpan && +maxLifeSpan > 0) {
     errors.minLifeSpan = 'La esperanza de vida mínima no puede ser mayor que la máxima'
     errors.maxLifeSpan = 'La esperanza de vida máxima no puede ser menos que la mínima'
   }
 
-  if (inputs.minLifeSpan < 0) {
-    errors.minLifeSpan = 'La esperanza de vida debe ser mayor a 0'
+  if (+minLifeSpan <= 0 && !maxLifeSpan) {
+    errors.minLifeSpan = 'La esperanza de vida mínima debe ser mayor a 0'
   }
 
-  if (inputs.maxLifeSpan < 0) {
-    errors.maxLifeSpan = 'La esperanza de vida debe ser mayor a 0'
+  if (+maxLifeSpan <= 0 && !minLifeSpan) {
+    errors.maxLifeSpan = 'La esperanza de vida máxima debe ser mayor a 0'
   }
 
-  if (!inputs.minLifeSpan && !inputs.maxLifeSpan) {
+  if (!minLifeSpan && !maxLifeSpan) {
     errors.minLifeSpan = 'Debe haber al menos una esperanza de vida'
     errors.maxLifeSpan = 'Debe haber al menos una esperanza de vida'
   }
 
-
+  if (temperament.length === 0) {
+    errors.temperament = 'Debe seleccionar al menos 1 temperamento'
+  }
 
   return errors
 }

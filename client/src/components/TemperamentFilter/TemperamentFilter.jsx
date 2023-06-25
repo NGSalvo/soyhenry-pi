@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import style from './TemperamentFilter.module.css';
 import { TemperamentService } from "@services";
 
-export const TemperamentFilter = ({ onTemperamentChange }) => {
+export const TemperamentFilter = ({ onTemperamentChange, navigateToPage, resetSignal }) => {
   const [temperaments, setTemperaments] = useState([]);
   const [selectedTemperaments, setSelectedTemperaments] = useState([]);
 
@@ -16,6 +16,7 @@ export const TemperamentFilter = ({ onTemperamentChange }) => {
 
     onTemperamentChange(updatedSelectedTemperaments, temperament)
     setSelectedTemperaments(updatedSelectedTemperaments)
+    navigateToPage && navigateToPage(1)
   }
 
   const fetchTemperaments = async() => {
@@ -23,9 +24,16 @@ export const TemperamentFilter = ({ onTemperamentChange }) => {
     setTemperaments(allTemperaments)
   }
 
+  const resetSelectedTemperamentFilter = () => {
+    setSelectedTemperaments([])
+  }
+
   useEffect(() => {
     fetchTemperaments()
-  }, []);
+
+    if (resetSignal) resetSelectedTemperamentFilter()
+
+  }, [resetSignal]);
 
   return (
     <div>

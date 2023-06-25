@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createDog } from "../../redux/actions";
 import { validate, isObjectEmpty } from "@utils"
@@ -19,8 +19,9 @@ const initialState = {
 
 export const CreateDog = () => {
   const [form, setForm] = useState(initialState)
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState(initialState)
   const [selectedTemperaments, setSelectedTemperaments] = useState([])
+  const [resetSignal, setResetSignal] = useState(false);
 
   const dispatch = useDispatch()
 
@@ -55,68 +56,90 @@ export const CreateDog = () => {
     )
   }
 
-  const handleTemperamentChange = (selectedTemperament) => {
+  const handleTemperamentChange = (selectedTemperament, currentTemperament) => {
+    let localUserSelectedTemperaments = selectedTemperaments
+    const hasSelectedTemperament = localUserSelectedTemperaments.includes(currentTemperament)
+    
+    localUserSelectedTemperaments = hasSelectedTemperament ? localUserSelectedTemperaments.filter(temperament => temperament !== currentTemperament) : localUserSelectedTemperaments.push(currentTemperament)
+    
     setSelectedTemperaments(selectedTemperament)
-  }
 
-  useEffect(() => {
-    validate(form)
-  }, [form])
+    setForm({
+      ...form, 
+      temperament: localUserSelectedTemperaments
+    })
+    setErrors(validate({...form, temperament: localUserSelectedTemperaments}))
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
-    dispatch(createDog(serializeData))
+    dispatch(createDog(serializeData))  
+    setResetSignal(true)
+    clearForm()
   }
 
-  // TODO: Posibilidad de seleccionar/agregar varios temperamentos en simultáneo.
+  const clearForm = () => {
+    setForm(initialState)
+    setErrors(initialState)
+    setSelectedTemperaments([])
+    setTimeout(() => {
+      // This is a workaround, I could refactor it as so the parent component has full control over the state of the filter 
+      setResetSignal(false);
+    }, 100);
+  }
+
  
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Nombre: </label>
-        <input type="text" name="name" onChange={handleChange}/>
+        <input type="text" name="name" onChange={handleChange} value={form.name}/>
         {
           errors.name ? <p>{errors.name}</p> : ''
         }
 
         <label htmlFor="minHeight">Altura mínima: </label>
-        <input type="number" name="minHeight" onChange={handleChange}/>
+        <input type="number" name="minHeight" onChange={handleChange} value={form.minHeight}/>
         {
           errors.minHeight ? <p>{errors.minHeight}</p> : ''
         }
 
         <label htmlFor="maxHeight">Altura máxima: </label>
-        <input type="number" name="maxHeight" onChange={handleChange}/>
+        <input type="number" name="maxHeight" onChange={handleChange} value={form.maxHeight}/>
         {
           errors.maxHeight ? <p>{errors.maxHeight}</p> : ''
         }
+
         <label htmlFor="minWeight">Peso mínima: </label>
-        <input type="number" name="minWeight" onChange={handleChange}/>
+        <input type="number" name="minWeight" onChange={handleChange} value={form.minWeight}/>
         {
           errors.minWeight ? <p>{errors.minWeight}</p> : ''
         }
 
         <label htmlFor="maxWeight">Peso máxima: </label>
-        <input type="number" name="maxWeight" onChange={handleChange}/>
+        <input type="number" name="maxWeight" onChange={handleChange} value={form.maxWeight}/>
         {
           errors.maxWeight ? <p>{errors.maxWeight}</p> : ''
         }
 
         <label htmlFor="minLifeSpan">Esperanza de vida mínima: </label>
-        <input type="number" name="minLifeSpan" onChange={handleChange}/>
+        <input type="number" name="minLifeSpan" onChange={handleChange} value={form.minLifeSpan}/>
         {
           errors.minLifeSpan ? <p>{errors.minLifeSpan}</p> : ''
         }
 
         <label htmlFor="maxLifeSpan">Esperanza de vida máxima: </label>
-        <input type="number" name="maxLifeSpan" onChange={handleChange}/>
+        <input type="number" name="maxLifeSpan" onChange={handleChange} value={form.maxLifeSpan}/>
         {
           errors.maxLifeSpan ? <p>{errors.maxLifeSpan}</p> : ''
         }
-        <TemperamentFilter onTemperamentChange={handleTemperamentChange}></TemperamentFilter>
-        <button type="submit">¡Crear 🐶!</button>
+        <TemperamentFilter onTemperamentChange={handleTemperamentChange} resetSignal={resetSignal}></TemperamentFilter>
+        {
+          errors.temperament ? <p>{errors.temperament}</p> : ''
+        }
+        <button type="submit" disabled={!isObjectEmpty(errors)}>¡Crear 🐶!</button>
       </form>
     </div>
   );

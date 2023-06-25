@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import style from './Home.module.css';
 
 import { Cards, Pagination, TemperamentFilter } from "@components";
@@ -14,7 +13,7 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
 
   return (
     <div>
-      <TemperamentFilter onTemperamentChange={handleTemperamentChange}></TemperamentFilter>
+      <TemperamentFilter onTemperamentChange={handleTemperamentChange} navigateToPage={navigateToPage}></TemperamentFilter>
       <Pagination currentPage={currentPage} totalPages={totalPages} getCurrentItems={getCurrentItems} navigateToPage={navigateToPage} />
       <Cards dogs={dogs}></Cards>
     </div>
