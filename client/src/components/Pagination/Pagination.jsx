@@ -12,12 +12,12 @@ export const Pagination = ({ currentPage, totalPages, getCurrentItems, navigateT
   return (
     <div>
       <div className={style.pagination}>
-        <button onClick={handlePrevious} disabled={currentPage === 1}>
-          &lt;&lt;
+        <button className={style['btn-left']} onClick={handlePrevious} disabled={currentPage === 1}>
+          &lt;
         </button>
-        <span>Página {currentPage} de {totalPages === 0 ? 1 : totalPages}</span>
-        <button onClick={handleNext} disabled={currentPage === totalPages}>
-          &gt;&gt;
+        <span className={style.text}>Page {currentPage} of {totalPages === 0 ? 1 : totalPages}</span>
+        <button className={style['btn-right']} onClick={handleNext} disabled={currentPage === totalPages}>
+          &gt;
         </button>
       </div>
     </div>
