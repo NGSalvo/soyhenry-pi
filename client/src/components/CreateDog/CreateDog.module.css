@@ -16,3 +16,14 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+.input-container {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.input-container input {
+  flex: 1;
+  width: 100%;
+}

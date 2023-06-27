@@ -100,26 +100,28 @@ export const CreateDog = () => {
           errors.name ? <p>{errors.name}</p> : ''
         }
 
-        <label htmlFor="minHeight">Altura mínima: </label>
-        <input type="number" name="minHeight" onChange={handleChange} value={form.minHeight}/>
+        <div className={style['input-container']}>
+          <label htmlFor="minHeight">Altura mínima: </label>
+          <input type="number" name="minHeight" onChange={handleChange} value={form.minHeight}/>
+          <label htmlFor="maxHeight">Altura máxima: </label>
+          <input type="number" name="maxHeight" onChange={handleChange} value={form.maxHeight}/>
+        </div>
         {
           errors.minHeight ? <p>{errors.minHeight}</p> : ''
         }
-
-        <label htmlFor="maxHeight">Altura máxima: </label>
-        <input type="number" name="maxHeight" onChange={handleChange} value={form.maxHeight}/>
         {
           errors.maxHeight ? <p>{errors.maxHeight}</p> : ''
         }
 
-        <label htmlFor="minWeight">Peso mínima: </label>
-        <input type="number" name="minWeight" onChange={handleChange} value={form.minWeight}/>
+        <div className={style['input-container']}>
+          <label htmlFor="minWeight">Peso mínima: </label>
+          <input type="number" name="minWeight" onChange={handleChange} value={form.minWeight}/>
+          <label htmlFor="maxWeight">Peso máxima: </label>
+          <input type="number" name="maxWeight" onChange={handleChange} value={form.maxWeight}/>
+        </div>
         {
           errors.minWeight ? <p>{errors.minWeight}</p> : ''
         }
-
-        <label htmlFor="maxWeight">Peso máxima: </label>
-        <input type="number" name="maxWeight" onChange={handleChange} value={form.maxWeight}/>
         {
           errors.maxWeight ? <p>{errors.maxWeight}</p> : ''
         }
