@@ -7,8 +7,8 @@ body {
 }
 
 html, body {
-  height: 100%;
-  background-color: #f0f0f0;
+  background-color: hsl(43 100% 51%);
+  /* background: linear-gradient(167deg, rgba(255,222,0,1) 6%, rgba(255,184,5,1) 69%, rgba(250,133,0,1) 100%); */
 }
 
 code {
@@ -16,3 +16,27 @@ code {
     monospace;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+#root {
+  isolation: isolate;
+}

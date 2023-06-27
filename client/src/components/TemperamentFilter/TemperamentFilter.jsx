@@ -36,7 +36,7 @@ export const TemperamentFilter = ({ onTemperamentChange, navigateToPage, resetSi
   }, [resetSignal]);
 
   return (
-    <div>
+    <div className={style.container}>
       <ul>
         {
           temperaments && temperaments.map(temperament => (

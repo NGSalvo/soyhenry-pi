@@ -27,3 +27,11 @@ li:hover {
 .selected {
   background-color: hsl(160, 70%, 80%);
 }
+
+.container {
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 200px;
+  overflow: scroll;
+}
