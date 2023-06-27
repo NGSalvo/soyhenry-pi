@@ -7,7 +7,13 @@ body {
 }
 
 html, body {
-  background-color: hsl(43 100% 51%);
+  --primary-color: hsl(43 100% 51%);
+  --secondary-color: hsl(32 100% 49%);
+  --accent-color: hsl(200 95% 14%);
+  --accent-secondary-color: hsl(199 64% 73%);
+  --white: hsl(0 0% 95%);
+  
+  background-color: var(--primary-color);
   /* background: linear-gradient(167deg, rgba(255,222,0,1) 6%, rgba(255,184,5,1) 69%, rgba(250,133,0,1) 100%); */
 }
 
