@@ -1,0 +1,15 @@
+.container {
+  display: flex; 
+  flex-direction: column;
+  align-self: center;
+}
+
+.btn-filter {
+  background-color: hsl(32 100% 49%);
+  width: 150px;
+  align-self: center;
+}
+
+.center-self {
+  align-self: center;
+}
