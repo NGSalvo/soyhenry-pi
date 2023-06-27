@@ -1,14 +1,14 @@
 .container {
-  color: #555;
+  color: var(--accent-color);
   display: flex;
   padding: 2px;
-  border: 1px solid rgb(190, 190, 190);
-  border-radius: 5px;
+  outline: 1px solid var(--primary-color);
+  border-radius: 50px;
   transition: all .3s;
 }
 
 .container:hover {
-  border: 1px solid white;
+  outline: 1px solid white;
 }
 
 .search {
@@ -20,20 +20,13 @@
   color: inherit;
   border: 1px solid transparent;
   border-radius: inherit;
-  /* margin-right: 5px;
-  border-radius: 0.5em;
-  border: 1px solid #bebebe;
-  transition: all .3s; */
 }
 
 .search::placeholder {
-  color: #bbb;
+  filter: brightness(0.90);
+  opacity: 0.5;
+  font-size: 12px;
 }
-
-/* .search:hover {
-  border: 1px solid white;
-} */
-
 
 .btn {
   font-size: 18px;

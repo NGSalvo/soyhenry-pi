@@ -12,7 +12,7 @@ export const SearchBar = ({ onSearch }) => {
 
    return (
       <div className={style.container}>
-         <input className={style.search} type='search' value={id} onChange={handleOnChange}/>
+         <input className={style.search} type='search' value={id} onChange={handleOnChange} placeholder='Input here...'/>
          <button className={style.btn} onClick={() => onSearch(id)}>🔎</button>
       </div>
    );
