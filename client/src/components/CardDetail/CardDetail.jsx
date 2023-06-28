@@ -74,17 +74,18 @@ export const CardDetail = () => {
    }, [id])
 
    return (
-      <div className={style.container}>
-         <img src={image.endsWith('webp') ? noDogImage : image} alt={name} />
-         <button className={[style.close, style.btn].join(' ')}>X</button>
-         <div className={style.info}>
-            <h5>ID: {id}</h5>
-            <h4 className={style.name}>{name}</h4>
-            <h5>Altura: {height}</h5>
-            <h5>Peso: {weight}</h5>
-            <h5>Esperanza de vida: {lifeSpan}</h5>
-            <h5>Temperamento: <Temperament temperaments={temperaments}/></h5>
-         </div>
+     <div className={style.container}>
+      <h2 className={style.title}>{name}</h2>
+      <div className={style.card}>
+        <img src={image.endsWith('webp') ? noDogImage : image} alt={name} />
+        <div>
+          <h5>ID: {id}</h5>
+          <h5>Height: {height}</h5>
+          <h5>Weight: {weight}</h5>
+          <h5>Life span: {lifeSpan}</h5>
+          <h5>Temperament: <Temperament temperaments={temperaments}/></h5>
+        </div>
       </div>
+    </div>
    )
 }
