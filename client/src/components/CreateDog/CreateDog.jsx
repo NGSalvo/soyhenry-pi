@@ -77,7 +77,7 @@ export const CreateDog = () => {
     event.preventDefault()
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
-    // dispatch(createDog(serializeData))
+    dispatch(createDog(serializeData))
     console.log();
     bark.play()
     setResetSignal(true)
