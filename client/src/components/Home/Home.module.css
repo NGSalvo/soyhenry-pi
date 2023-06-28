@@ -44,6 +44,7 @@
 .clear:hover {
   background-color: var(--secondary-color);
   color: var(--accent-color);
+  box-shadow: 1px 3px var(--white);
 }
 
 
@@ -53,10 +54,22 @@
   outline: 2px solid var(--white);
 }
 
+.btn-filter-on:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  box-shadow: 1px 3px var(--white);
+}
+
 .btn-filter-off {
   background-color: var(--accent-color);
   color: var(--white);
   outline: none;
+}
+
+.btn-filter-off:hover {
+  background-color: var(--accent-color);
+  color: var(--white);
+  box-shadow: 1px 3px var(--white);
 }
 
 
