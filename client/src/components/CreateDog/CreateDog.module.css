@@ -48,3 +48,24 @@ input {
   cursor: default;
   filter: brightness(.55);
 }
+
+.svg-background {
+  width:150px;
+  height: 150px;
+  position: absolute;
+  fill: var(--accent-color);
+}
+
+.svg-left {
+  top: 40%;
+  left: 10%;
+}
+
+.svg-right {
+  top: 25%;
+  right: 15%;
+}
+
+.svg-left:hover, .svg-right:hover {
+  fill: var(--secondary-color);
+}
