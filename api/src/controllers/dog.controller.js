@@ -198,7 +198,7 @@ const getDog = async (req, res) => {
 
     if (!UUIDRegExp.test(breedId)) {
       console.log('not an UUID')
-      return res.status(404).json({message: 'Raza no encontrada'})
+      return res.status(404).json({message: 'Breed not found'})
     }
     
     const foundDBDogs = await Dog.findByPk(breedId, { 
@@ -235,7 +235,7 @@ const getDog = async (req, res) => {
       return res.status(200).send(foundDbDogsData)
     }
 
-    return res.status(404).json({message: 'Raza no encontrada'})
+    return res.status(404).json({message: 'Breed not found'})
 
   } catch(error) {
     res.status(500).send(error)
@@ -256,7 +256,7 @@ const addDog = async (req, res) => {
     const dog = req.body
     const { name, height, weight, life_span: lifeSpan, temperament, image } = dog
 
-    if (!hasAllProperties(dog, requiredProperties)) return res.status(401).json({message: 'Faltan campos requeridos'}) 
+    if (!hasAllProperties(dog, requiredProperties)) return res.status(401).json({message: 'Missing required fields'}) 
 
     const [ newDog, created ] = await Dog.findOrCreate({
       where: {
@@ -271,7 +271,7 @@ const addDog = async (req, res) => {
       include: [ Height, Weight, { model: Temperament, as: 'temperament'}, LifeSpan ],
     })
 
-    if (!created) return res.status(409).json({ message: 'Ya existe este registro' })
+    if (!created) return res.status(409).json({ message: 'Allready exist in DB' })
 
     const existingTemperaments = await Temperament.findAll({
       where: { name: temperament },
