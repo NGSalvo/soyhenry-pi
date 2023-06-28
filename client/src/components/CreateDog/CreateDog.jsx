@@ -31,16 +31,16 @@ export const CreateDog = () => {
     return {
       name: inputs.name,
       height: {
-        min: inputs.minHeight || inputs.maxHeight,
-        max: inputs.maxHeight || inputs.minHeight,
+        min: Math.floor(+inputs.minHeight) || Math.floor(+inputs.maxHeight),
+        max: Math.floor(+inputs.maxHeight) || Math.floor(+inputs.minHeight),
       },
       weight: {
-        min: inputs.minWeight || inputs.maxWeight,
-        max: inputs.maxWeight || inputs.minWeight,
+        min: Math.floor(+inputs.minWeight) || Math.floor(+inputs.maxWeight),
+        max: Math.floor(+inputs.maxWeight) || Math.floor(+inputs.minWeight),
       },
       life_span: {
-        min: inputs.minLifeSpan || inputs.maxLifeSpan,
-        max: inputs.maxLifeSpan || inputs.minLifeSpan,
+        min: Math.floor(+inputs.minLifeSpan) || Math.floor(+inputs.maxLifeSpan),
+        max: Math.floor(+inputs.maxLifeSpan) || Math.floor(+inputs.minLifeSpan),
       },
       image: inputs.image,
       temperament: selectedTemperaments.map(temperament => temperament.name)
