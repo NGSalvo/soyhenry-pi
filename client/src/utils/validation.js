@@ -15,7 +15,7 @@ export const validate = ({ name, minHeight, maxHeight, minWeight, maxWeight, min
   }
 
   if (+minHeight <= 0 ) {
-    errors.minHeight = 'The maximum height should be greater than 0'
+    errors.minHeight = 'The minimum height should be greater than 0'
   }
 
   if (+maxHeight <= 0) {
