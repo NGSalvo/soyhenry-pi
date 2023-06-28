@@ -4,6 +4,7 @@ import { createDog } from "../../redux/actions";
 import { validate, isObjectEmpty } from "@utils"
 import { TemperamentFilter } from '@components'
 import style from './CreateDog.module.css'
+import dogBark from "@assets/sounds/single-bark-of-a-dog-38780.mp3";
 
 const initialState = {
   name: "",
@@ -22,6 +23,7 @@ export const CreateDog = () => {
   const [errors, setErrors] = useState(initialState)
   const [selectedTemperaments, setSelectedTemperaments] = useState([])
   const [resetSignal, setResetSignal] = useState(false);
+  const bark = new Audio(dogBark)
 
   const dispatch = useDispatch()
 
@@ -75,7 +77,9 @@ export const CreateDog = () => {
     event.preventDefault()
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
-    dispatch(createDog(serializeData))  
+    // dispatch(createDog(serializeData))
+    console.log();
+    bark.play()
     setResetSignal(true)
     clearForm()
   }
