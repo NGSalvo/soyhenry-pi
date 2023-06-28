@@ -27,3 +27,19 @@ input {
   flex: 1;
   width: 100%;
 }
+
+.error {
+  color: red;
+}
+
+.btn {
+  background-color: var(--accent-color);
+  color: var(--white);
+  cursor: pointer;
+  transition: .3s all ease-in;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}

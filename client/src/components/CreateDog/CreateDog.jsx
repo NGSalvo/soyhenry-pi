@@ -94,54 +94,55 @@ export const CreateDog = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Nombre: </label>
+        <label htmlFor="name">Name: </label>
         <input type="text" name="name" onChange={handleChange} value={form.name}/>
         {
-          errors.name ? <p>{errors.name}</p> : ''
+          errors.name ? <p className={style.error}>{errors.name}</p> : ''
         }
 
         <div className={style['input-container']}>
-          <label htmlFor="minHeight">Altura mínima: </label>
+          <label htmlFor="minHeight">Min. Height: </label>
           <input type="number" name="minHeight" onChange={handleChange} value={form.minHeight}/>
-          <label htmlFor="maxHeight">Altura máxima: </label>
+          <label htmlFor="maxHeight">Max. Height: </label>
           <input type="number" name="maxHeight" onChange={handleChange} value={form.maxHeight}/>
         </div>
         {
-          errors.minHeight ? <p>{errors.minHeight}</p> : ''
+          errors.minHeight ? <p className={style.error}>{errors.minHeight}</p> : ''
         }
         {
-          errors.maxHeight ? <p>{errors.maxHeight}</p> : ''
+          errors.maxHeight ? <p className={style.error}>{errors.maxHeight}</p> : ''
         }
 
         <div className={style['input-container']}>
-          <label htmlFor="minWeight">Peso mínima: </label>
+          <label htmlFor="minWeight">Min. Weight: </label>
           <input type="number" name="minWeight" onChange={handleChange} value={form.minWeight}/>
-          <label htmlFor="maxWeight">Peso máxima: </label>
+          <label htmlFor="maxWeight">Max. Weight: </label>
           <input type="number" name="maxWeight" onChange={handleChange} value={form.maxWeight}/>
         </div>
         {
-          errors.minWeight ? <p>{errors.minWeight}</p> : ''
+          errors.minWeight ? <p className={style.error}>{errors.minWeight}</p> : ''
         }
         {
-          errors.maxWeight ? <p>{errors.maxWeight}</p> : ''
+          errors.maxWeight ? <p className={style.error}>{errors.maxWeight}</p> : ''
         }
-
-        <label htmlFor="minLifeSpan">Esperanza de vida mínima: </label>
+        <div className={style['input-container']}>
+        <label htmlFor="minLifeSpan">Min. Life span: </label>
         <input type="number" name="minLifeSpan" onChange={handleChange} value={form.minLifeSpan}/>
+        <label htmlFor="maxLifeSpan">Max. Life span: </label>
+        <input type="number" name="maxLifeSpan" onChange={handleChange} value={form.maxLifeSpan}/>
+        </div>
         {
-          errors.minLifeSpan ? <p>{errors.minLifeSpan}</p> : ''
+          errors.minLifeSpan ? <p className={style.error}>{errors.minLifeSpan}</p> : ''
         }
 
-        <label htmlFor="maxLifeSpan">Esperanza de vida máxima: </label>
-        <input type="number" name="maxLifeSpan" onChange={handleChange} value={form.maxLifeSpan}/>
         {
-          errors.maxLifeSpan ? <p>{errors.maxLifeSpan}</p> : ''
+          errors.maxLifeSpan ? <p className={style.error}>{errors.maxLifeSpan}</p> : ''
         }
         <TemperamentFilter onTemperamentChange={handleTemperamentChange} resetSignal={resetSignal}></TemperamentFilter>
         {
-          errors.temperament ? <p>{errors.temperament}</p> : ''
+          errors.temperament ? <p className={style.error}>{errors.temperament}</p> : ''
         }
-        <button type="submit" disabled={!isObjectEmpty(errors)}>¡Crear 🐶!</button>
+        <button className={style.btn} type="submit" disabled={!isObjectEmpty(errors)}>¡Crear 🐶!</button>
       </form>
     </div>
   );
