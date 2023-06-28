@@ -2,14 +2,70 @@
   display: flex; 
   flex-direction: column;
   align-self: center;
-}
-
-.btn-filter {
-  background-color: hsl(32 100% 49%);
-  width: 150px;
-  align-self: center;
+  width: 100%;
 }
 
 .center-self {
   align-self: center;
+}
+
+.cards-controller {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.cards-controller select {
+  background-color: var(--accent-color);
+  color: var(--white);
+  border-radius: 25px;
+  margin-left: 5px;
+  transition: .3s all ease-in-out;
+}
+
+.cards-controller select:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  border-radius: 25px;
+  margin-left: 5px;
+}
+
+.btn {
+  cursor: pointer;
+  transition: .3s all ease-in;
+}
+
+.clear {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+.clear:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}
+
+
+.btn-filter-on {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  outline: 2px solid var(--white);
+}
+
+.btn-filter-off {
+  background-color: var(--accent-color);
+  color: var(--white);
+  outline: none;
+}
+
+
+.cards-container {
+  /* display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(Min(100%, 245px), 1fr)); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

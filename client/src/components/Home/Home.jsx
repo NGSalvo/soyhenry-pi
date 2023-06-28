@@ -33,28 +33,35 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
   }
 
   return (
-    <div className={style.container}>
-    <button onClick={handleClearAll}>Clear 🪄</button>
-      Created At: 
-      <select onChange={handleFilter}>
-        <option value="ALL">ALL</option>
-        <option value="API">API</option>
-        <option value="DB">DB</option>
-      </select>    
-      Order by:
-      <select onChange={handleOrder}>
-        <option value="ASC">Ascending</option>
-        <option value="DESC">Descending</option>
-        <option value="HEAVIER">Heavier</option>
-        <option value="LIGHTER">Lighter</option>
-        <option value="AZ">A-Z</option>
-        <option value="ZA">Z-A</option>
-      </select>  
-      <button className={style['btn-filter']} onClick={handleToggleHideFilter}>
+    <section className={style.container}>
+      <div className={style['cards-controller']}>
+        <button className={[style.btn, style.clear].join(' ')} onClick={handleClearAll}>Clear 🪄</button>
+        <span>
+          Created At: 
+          <select onChange={handleFilter}>
+            <option value="ALL">ALL</option>
+            <option value="API">API</option>
+            <option value="DB">DB</option>
+          </select>    
+        </span>
+        <span>
+          Order by:
+          <select onChange={handleOrder}>
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+            <option value="HEAVIER">Heavier</option>
+            <option value="LIGHTER">Lighter</option>
+            <option value="AZ">A-Z</option>
+            <option value="ZA">Z-A</option>
+          </select>  
+        </span>
         {
-          isHidden ? 'Hide filters' : 'Show filters'
+          isHidden ? 
+          <button className={[style['btn-filter-on'], style.btn].join(' ')} onClick={handleToggleHideFilter}>Hide filters</button>
+          :
+          <button className={[style['btn-filter-off'], style.btn].join(' ')} onClick={handleToggleHideFilter}>Show filters</button>
         }
-      </button>
+      </div>
       <div className={style['center-self']}>
         {
           isHidden ?
@@ -62,7 +69,9 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
         }
       </div>
       <Pagination currentPage={currentPage} totalPages={totalPages} getCurrentItems={getCurrentItems} navigateToPage={navigateToPage} />
-      <Cards dogs={dogs}></Cards>
-    </div>
+      <div className={style['cards-container']}>
+        <Cards dogs={dogs}></Cards>
+      </div>
+    </section>
   )
 }

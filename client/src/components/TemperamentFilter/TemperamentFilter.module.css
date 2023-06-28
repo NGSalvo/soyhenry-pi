@@ -18,14 +18,17 @@ li {
   color: hsla(0, 0%, 26%, 1);
   font-size: 14px;
   cursor: pointer;
+  transition: all .3s ease-in-out;
 }
 
 li:hover {
-  background-color: hsl(160, 70%, 80%);
+  background-color: var(--accent-color);
+  color: var(--white);
 }
 
 .selected {
-  background-color: hsl(160, 70%, 80%);
+  background-color: var(--accent-color);
+  color: var(--white);
 }
 
 .container {
@@ -33,5 +36,5 @@ li:hover {
   width: 100%;
   max-width: 400px;
   max-height: 200px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
