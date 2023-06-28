@@ -9,14 +9,16 @@ export const Card = ({id, name, weight, temperaments, image}) => {
    return (
       <div className={style.container}>
          <img src={image.endsWith('webp') ? noDogImage : image} alt={name} />
-         <button className={[style.close, style.btn].join(' ')}>X</button>
-         <div className={style.info}>
-            <Link to={`/detail/${id}`}>
-               <h4 className={style.name}>{name}</h4>
-            </Link>
-            <h5>Peso: {weight}</h5>
-            <h5>Temperamento: <Temperament temperaments={temperaments}/></h5>
+         <div>
+            <h2>{name}</h2>
+            <h5>Weight: {weight}</h5>
+            <h5>Temperament: <Temperament temperaments={temperaments}/></h5>
          </div>
+         <button className={style.btn}>
+            <Link to={`/detail/${id}`}>
+               Go to details
+            </Link>
+         </button>
       </div>
    )
 }
