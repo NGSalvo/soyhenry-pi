@@ -10,6 +10,8 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
   const dispatch = useDispatch()
   const [isHidden, setHidden] = useState(false)
   const [resetSignal, setResetSignal] = useState(false);
+  const [filter, setFilter] = useState('ALL')
+  const [order, setOrder] = useState('ASC')
   
   const handleTemperamentChange = (selectedTemperament, lastSelected) => {
     dispatch(filterByTemperament(lastSelected.name))
@@ -22,16 +24,20 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
   const handleFilter = (event) => {
     dispatch(filterCards(event.target.value))
     navigateToPage(1)
+    setFilter(event.target.value);
   }
 
   const handleOrder = (event) => {
     dispatch(orderCards(event.target.value))
+    setOrder(event.target.value);
   }
 
   const handleClearAll = () => {
     dispatch(clearCards())
     setResetSignal(true)
     navigateToPage(1)
+    setFilter('ALL')
+    setOrder('ASC')
     setTimeout(() => {
       // This is a workaround, I could refactor it as so the parent component has full control over the state of the filter 
       setResetSignal(false);
@@ -44,7 +50,7 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
         <button className={[style.btn, style.clear].join(' ')} onClick={handleClearAll}>Clear 🪄</button>
         <span>
           Created At: 
-          <select onChange={handleFilter}>
+          <select value={filter} onChange={handleFilter}>
             <option value="ALL">ALL</option>
             <option value="API">API</option>
             <option value="DB">DB</option>
@@ -52,7 +58,7 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
         </span>
         <span>
           Order by:
-          <select onChange={handleOrder}>
+          <select value={order} onChange={handleOrder}>
             <option value="ASC">Ascending</option>
             <option value="DESC">Descending</option>
             <option value="HEAVIER">Heavier</option>
