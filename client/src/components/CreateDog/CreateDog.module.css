@@ -54,6 +54,8 @@ input {
   height: 150px;
   position: absolute;
   fill: var(--accent-color);
+  filter: blur(2px);
+  transition: all .3s ease-in-out;
 }
 
 .svg-left {
@@ -68,4 +70,5 @@ input {
 
 .svg-left:hover, .svg-right:hover {
   fill: var(--secondary-color);
+  filter: blur(0);
 }
