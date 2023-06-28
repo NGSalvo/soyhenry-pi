@@ -27,6 +27,10 @@ export const validate = ({ name, minHeight, maxHeight, minWeight, maxWeight, min
     errors.maxHeight = 'The maximum height cannot be greater than the minimum height'
   }
 
+  if (+minHeight > 200 || +maxHeight > 200) {
+    errors.minHeight = 'The minimum/maximum height cannot be greater than 200'
+  }
+
   if (!minWeight && !maxWeight) {
     errors.minWeight = 'There must be a weight'
   }
@@ -44,6 +48,10 @@ export const validate = ({ name, minHeight, maxHeight, minWeight, maxWeight, min
     errors.maxWeight = 'The maximum weight cannot be greater than the minimum weight'
   }
 
+  if (+minWeight > 200 || +maxWeight > 200) {
+    errors.minWeight = 'The minimum/maximum weight cannot be greater than 200'
+  }
+
   if (!minLifeSpan && !maxLifeSpan) {
     errors.minLifeSpan = 'There must be a life span'
   }
@@ -59,6 +67,10 @@ export const validate = ({ name, minHeight, maxHeight, minWeight, maxWeight, min
   if (+minLifeSpan > +maxLifeSpan) {
     errors.minLifeSpan = 'The minimum life span cannot be greater than the maximum life span'
     errors.maxLifeSpan = 'The maximum life span cannot be greater than the minimum life span'
+  }
+
+  if (+minHeight > 30 || +maxHeight > 30) {
+    errors.minLifeSpan = 'The minimum/maximum life span cannot be greater than 30'
   }
 
   if (temperament.length === 0) {
