@@ -38,3 +38,10 @@
 .inactive {
   border: none;
 }
+
+@media screen and (max-width: 400px) {
+  .container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

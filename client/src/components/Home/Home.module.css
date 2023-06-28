@@ -82,3 +82,10 @@
   align-items: center;
   justify-content: center;
 }
+
+@media screen and (max-width: 400px) {
+  .cards-controller {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

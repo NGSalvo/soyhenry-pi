@@ -72,3 +72,21 @@ input {
   fill: var(--secondary-color);
   filter: blur(0);
 }
+
+@media screen and (max-width: 400px) {
+  .svg-background {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .svg-left {
+    top: 40%;
+    left: 1%;
+  }
+
+  .svg-right {
+    top: 25%;
+    right: 1%;
+  }
+}

@@ -54,3 +54,9 @@
   background-color: var(--secondary-color);
   border-color: --var(--primary-color);
 }
+
+@media screen and (max-width: 400px) {
+  .container {
+    flex-direction: column;
+  }
+}
