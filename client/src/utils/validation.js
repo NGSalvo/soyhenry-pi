@@ -2,67 +2,67 @@ export const validate = ({ name, minHeight, maxHeight, minWeight, maxWeight, min
   const errors = {}
 
   if (!name) {
-    errors.name = 'Nombre es requerido'
+    errors.name = 'Name is required'
   }
 
   if (name.length > 100) {
     const characterCount = name.length
-    errors.name = `No se puede ingresar más de 100 caracteres. Cantidad actual: ${characterCount}`
+    errors.name = `Cannot input more than 100 characters. Count: ${characterCount}`
   }
 
   if (!minHeight && !maxHeight) {
-    errors.minHeight = 'Debe haber al menos una altura'
+    errors.minHeight = 'There must be a height'
   }
 
   if (+minHeight <= 0 ) {
-    errors.minHeight = 'La altura mínima debe ser mayor a 0'
+    errors.minHeight = 'The maximum height should be greater than 0'
   }
 
   if (+maxHeight <= 0) {
-    errors.maxHeight = 'La altura máxima debe ser mayor a 0'
+    errors.maxHeight = 'The maximum height should be greater than 0'
   }
   
   if (+minHeight > +maxHeight) {
-    errors.minHeight = 'La altura mínima no puede ser mayor que la máxima'
-    errors.maxHeight = 'La altura máxima no puede ser menor que la mínima'
+    errors.minHeight = 'The maximum height cannot be greater than the maximum height'
+    errors.maxHeight = 'The maximum height cannot be greater than the minimum height'
   }
 
   if (!minWeight && !maxWeight) {
-    errors.minWeight = 'Debe haber al menos un peso mínimo'
+    errors.minWeight = 'There must be a weight'
   }
   
   if (+minWeight <= 0) {
-    errors.minWeight = 'El peso mínimo debe ser mayor a 0'
+    errors.minWeight = 'The maximum weight should be greater than 0'
   }
 
   if (+maxWeight <= 0) {
-    errors.maxWeight = 'El peso máximo debe ser mayor a 0'
+    errors.maxWeight = 'The maximum weight should be greater than 0'
   }
 
   if (+minWeight > +maxWeight) {
-    errors.minWeight = 'El peso mínimo no puede ser mayor que el máximo'
-    errors.maxWeight = 'El peso máximo no puede ser menor que el mínimo'
+    errors.minWeight = 'The maximum weight cannot be greater than the maximum weight'
+    errors.maxWeight = 'The maximum weight cannot be greater than the minimum weight'
   }
 
   if (!minLifeSpan && !maxLifeSpan) {
-    errors.minLifeSpan = 'Debe haber al menos una esperanza de vida'
+    errors.minLifeSpan = 'There must be a life span'
   }
 
   if (+minLifeSpan <= 0) {
-    errors.minLifeSpan = 'La esperanza de vida mínima debe ser mayor a 0'
+    errors.minLifeSpan = 'The maximum life span should be greater than 0'
   }
   
   if (+maxLifeSpan <= 0) {
-    errors.maxLifeSpan = 'La esperanza de vida máxima debe ser mayor a 0'
+    errors.maxLifeSpan = 'The maximum life span should be greater than 0'
   }
   
   if (+minLifeSpan > +maxLifeSpan) {
-    errors.minLifeSpan = 'La esperanza de vida mínima no puede ser mayor que la máxima'
-    errors.maxLifeSpan = 'La esperanza de vida máxima no puede ser menor que la mínima'
+    errors.minLifeSpan = 'The maximum life span cannot be greater than the maximum life span'
+    errors.maxLifeSpan = 'The maximum life span cannot be greater than the minimum life span'
   }
 
   if (temperament.length === 0) {
-    errors.temperament = 'Debe seleccionar al menos 1 temperamento'
+    errors.temperament = 'There must be at least one temperament'
   }
 
   return errors

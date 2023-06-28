@@ -78,7 +78,6 @@ export const CreateDog = () => {
     const serializeData = serializeInput(form)
     if (!isObjectEmpty(errors)) return
     dispatch(createDog(serializeData))
-    console.log();
     bark.play()
     setResetSignal(true)
     clearForm()
@@ -146,7 +145,7 @@ export const CreateDog = () => {
         {
           errors.temperament ? <p className={style.error}>{errors.temperament}</p> : ''
         }
-        <button className={style.btn} type="submit" disabled={!isObjectEmpty(errors)}>¡Crear 🐶!</button>
+        <button className={style.btn} type="submit" disabled={!isObjectEmpty(errors)}>Woof Woof 🐶!</button>
       </form>
     </div>
   );

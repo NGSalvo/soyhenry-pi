@@ -43,3 +43,8 @@ input {
   background-color: var(--secondary-color);
   color: var(--accent-color);
 }
+
+.btn:disabled {
+  cursor: default;
+  filter: brightness(.55);
+}
