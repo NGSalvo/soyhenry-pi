@@ -9,6 +9,7 @@ import { clearCards, filterCards, orderCards } from "../../redux/actions";
 export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateToPage }) => {
   const dispatch = useDispatch()
   const [isHidden, setHidden] = useState(false)
+  const [resetSignal, setResetSignal] = useState(false);
   
   const handleTemperamentChange = (selectedTemperament, lastSelected) => {
     dispatch(filterByTemperament(lastSelected.name))
@@ -29,7 +30,12 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
 
   const handleClearAll = () => {
     dispatch(clearCards())
+    setResetSignal(true)
     navigateToPage(1)
+    setTimeout(() => {
+      // This is a workaround, I could refactor it as so the parent component has full control over the state of the filter 
+      setResetSignal(false);
+    }, 100);
   }
 
   return (
@@ -65,7 +71,7 @@ export const Home = ({ dogs, currentPage, totalPages, getCurrentItems, navigateT
       <div className={style['center-self']}>
         {
           isHidden ?
-          <TemperamentFilter onTemperamentChange={handleTemperamentChange} navigateToPage={navigateToPage}></TemperamentFilter> : ''
+          <TemperamentFilter onTemperamentChange={handleTemperamentChange} navigateToPage={navigateToPage} resetSignal={resetSignal}></TemperamentFilter> : ''
         }
       </div>
       <Pagination currentPage={currentPage} totalPages={totalPages} getCurrentItems={getCurrentItems} navigateToPage={navigateToPage} />
